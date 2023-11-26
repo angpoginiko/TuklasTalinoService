@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+
 namespace TuklasTalinoService;
 
 public class Startup
@@ -12,6 +14,12 @@ public class Startup
     // This method gets called by the runtime. Use this method to add services to the container
     public void ConfigureServices(IServiceCollection services)
     {
+        services.AddDbContext<TuklasTalinoIdentityDbContext>(
+        options => options.UseNpgsql(
+            Configuration["Postgres"],
+            providerOptions => providerOptions.EnableRetryOnFailure(5, TimeSpan.FromSeconds(10), null)));
+
+        services.AddSwaggerGen();
         services.AddControllers();
     }
 
@@ -21,6 +29,8 @@ public class Startup
         if (env.IsDevelopment())
         {
             app.UseDeveloperExceptionPage();
+            app.UseSwagger();
+            app.UseSwaggerUI();
         }
 
         app.UseHttpsRedirection();
