@@ -2,9 +2,9 @@
 using Microsoft.EntityFrameworkCore;
 using TuklasTalinoService.Users;
 
-namespace TuklasTalinoService
+namespace TuklasTalinoService.DbContexts
 {
-    public class TuklasTalinoIdentityDbContext: IdentityDbContext<ApplicationUser>
+    public class TuklasTalinoIdentityDbContext : IdentityDbContext<ApplicationUser>
     {
         private readonly string _connectionString;
         public TuklasTalinoIdentityDbContext(DbContextOptions<TuklasTalinoIdentityDbContext> options, IConfiguration configuration)

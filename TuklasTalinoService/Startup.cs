@@ -1,4 +1,8 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
+using System;
+using TuklasTalinoService.DbContexts;
+using TuklasTalinoService.Users;
 
 namespace TuklasTalinoService;
 
@@ -19,8 +23,8 @@ public class Startup
             Configuration["Postgres"],
             providerOptions => providerOptions.EnableRetryOnFailure(5, TimeSpan.FromSeconds(10), null)));
 
+        services.AddEndpointsApiExplorer();
         services.AddSwaggerGen();
-        services.AddControllers();
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline
@@ -37,15 +41,9 @@ public class Startup
 
         app.UseRouting();
 
-        app.UseAuthorization();
-
         app.UseEndpoints(endpoints =>
         {
-            endpoints.MapControllers();
-            endpoints.MapGet("/", async context =>
-            {
-                await context.Response.WriteAsync("Welcome to running ASP.NET Core on AWS Lambda");
-            });
+            endpoints.MapUserEndpoints();
         });
     }
 }
