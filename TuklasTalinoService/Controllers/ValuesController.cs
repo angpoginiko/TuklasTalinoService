@@ -13,8 +13,8 @@ public class ValuesController : ControllerBase
     }
 
     // GET api/values/5
-    [HttpGet("{id}")]
-    public string Get(int id)
+    [HttpGet("{sharedId}")]
+    public string Get(int sharedId)
     {
         return "value";
     }
